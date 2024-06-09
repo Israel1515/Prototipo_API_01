@@ -1,31 +1,30 @@
 //En este archivo se están utilizando datos de prueba
 
-async function loadPosts(){
-   const res = await fetch('https://jsonplaceholder.typicode.com/posts') //Aquí se estan llamando los datos de la página jsonplaceholder
+//import PostCard from '../../components/PostCard' Esta es una forma de importar los archivos
+import PostCard from '@/components/PostCard' //Esta es otra forma más corta. El arroba ya te ubica en lo principal
+import "./posts.css"
+
+async function loadPosts(){ //Esta función carga las publicaciones
+   const res = await fetch('https://jsonplaceholder.typicode.com/posts'); //Aquí se estan llamando los datos de la página 
    const data = await res.json()
-   return data;
+   console.log(data)
+   return data
 }
 
-
+//Este es el componente de react js por parte del servidor, o un RSC
 async function PostPages(){
-
   const posts = await loadPosts()
   console.log(posts);
 
-    return (
-      <div>
-        <h1>Ejemplo de Publicaciones</h1>
-        
-        {posts.map((post) => (
-            <div key={post.id}>
-                <h3>{post.title}</h3>
-                <p>{post.body}</p>
-            </div>
-            
-        ))}
+  return (
+    <div className='grid'>
+      
+      {posts.map((post) => (
+        <PostCard post={post} key={post.id} />
 
-      </div>
-    );
+      ))}
+    </div>
+  );
 }
 
 export default PostPages;
